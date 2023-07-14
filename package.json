@@ -1,0 +1,45 @@
+{
+  "name": "quill-even-better-image",
+  "version": "1.0.0",
+  "source": "src/index.ts",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "types": "dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel demo/index.html --dist-dir ./dist/demo",
+    "prettier-format": "prettier --write './**/*.{js,jsx,ts,tsx,css,scss,md,json,html}'",
+    "prettier-check": "prettier --check './**/*.{js,jsx,ts,tsx,css,scss,md,json,html}'",
+    "prepublishOnly": "parcel build"
+  },
+  "dependencies": {
+    "@swc/helpers": "^0.5.1",
+    "@types/node": "^18.16.18",
+    "quill": "^2.0.0-dev.3"
+  },
+  "devDependencies": {
+    "@parcel/packager-ts": "2.9.3",
+    "@parcel/transformer-inline-string": "^2.9.3",
+    "@parcel/transformer-sass": "2.9.3",
+    "@parcel/transformer-typescript-types": "2.9.3",
+    "@types/quill": "^2.0.10",
+    "parcel": "^2.9.3",
+    "prettier": "^2.8.8",
+    "typescript": ">=3.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
