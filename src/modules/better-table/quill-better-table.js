@@ -26,7 +26,7 @@ import {
 
 require("./assets/quill-better-table.scss");
 
-class BetterTable extends Module {
+export default class BetterTable extends Module {
   static register() {
     Quill.register(TableCol, true);
     Quill.register(TableColGroup, true);
@@ -369,5 +369,3 @@ export function isTableCell(blot) {
 export function isInTableCell(current) {
   return current && current.parent ? (isTableCell(current.parent) ? true : isInTableCell(current.parent)) : false;
 }
-
-export default BetterTable;
