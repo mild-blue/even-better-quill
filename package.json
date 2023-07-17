@@ -1,5 +1,5 @@
 {
-  "name": "quill-even-better-image",
+  "name": "even-better-quill",
   "version": "1.0.0",
   "source": "src/index.ts",
   "main": "dist/main.js",
@@ -8,6 +8,25 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mild-blue/even-better-quill.git"
+  },
+  "keywords": [
+    "quill",
+    "quilljs",
+    "table",
+    "multiline",
+    "quilltable",
+    "image",
+    "image resize",
+    "image embed"
+  ],
+  "author": "Mild Blue",
+  "bugs": {
+    "url": "https://github.com/mild-blue/even-better-quill/issues"
+  },
+  "homepage": "https://github.com/mild-blue/even-better-quill/#readme",
   "license": "MIT",
   "scripts": {
     "dev": "parcel demo/index.html --dist-dir ./dist/demo",
