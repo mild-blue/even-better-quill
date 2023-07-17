@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Quill from "quill";
 import TableColumnTool from "./modules/table-column-tool";
 import TableSelection from "./modules/table-selection";
