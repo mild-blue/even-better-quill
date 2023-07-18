@@ -151,7 +151,7 @@ export default class BetterTable extends Module {
     // or pasting
     quill.clipboard.addMatcher("td", matchTableCell);
     quill.clipboard.addMatcher("th", matchTableHeader);
-    quill.clipboard.addMatcher("table", matchTable);
+    quill.clipboard.addMatcher("table", (node, delta) => matchTable(node, delta, quill, options));
     quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => matchElement(quill, node, delta));
     // quill.clipboard.addMatcher('h1, h2, h3, h4, h5, h6', matchHeader)
 
