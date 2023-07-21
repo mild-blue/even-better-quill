@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Quill from "quill";
 import { css, getRelativeRect } from "../utils";
 
@@ -253,18 +254,9 @@ export default class TableOperationMenu {
       "min-height": `${MENU_MIN_HEIHGT}px`,
       width: `${MENU_WIDTH}px`,
     });
-
-    for (let name in this.menuItems) {
-      if (this.menuItems[name]) {
-        this.domNode.appendChild(
-          this.menuItemCreator(Object.assign({}, MENU_ITEMS_DEFAULT[name], this.menuItems[name]))
-        );
-
-        if (["insertRowDown", "unmergeCells"].indexOf(name) > -1) {
-          this.domNode.appendChild(dividingCreator());
-        }
-      }
-    }
+    // todo save string in variable
+    this.domNode.appendChild(subTitleCreator("Actions"))
+    this.domNode.appendChild(createItemsSection(this.menuItems, this.menuItemCreator))
 
     // if colors option is false, disabled bg color
     if (this.options.color && this.options.color !== false) {
@@ -278,6 +270,24 @@ export default class TableOperationMenu {
       this.domNode.appendChild(dividingCreator());
       this.domNode.appendChild(subTitleCreator(this.cellBorderWidthSubTitle));
       this.domNode.appendChild(this.setBorderWidth(this.cellBorderWidth));
+    }
+
+    this.domNode.appendChild(dividingCreator());
+    this.domNode.appendChild(this.deleteItemCreator())
+
+    // todo handler is not working
+    function createItemsSection(menuItems, menuItemCreator){
+      const node = document.createElement("div");
+      node.classList.add("qlbt-operation-menu-items");
+
+      for (let name in menuItems) {
+        if (menuItems[name] && name !== "deleteTable") {
+          node.appendChild(
+              menuItemCreator(Object.assign({}, MENU_ITEMS_DEFAULT[name], menuItems[name]))
+          );
+        }
+      }
+      return node
     }
 
     // create dividing line
@@ -376,6 +386,25 @@ export default class TableOperationMenu {
 
     const textSpan = document.createElement("span");
     textSpan.classList.add("qlbt-operation-menu-text");
+    textSpan.innerText = text;
+
+    node.appendChild(iconSpan);
+    // node.appendChild(textSpan);
+    node.addEventListener("click", handler.bind(this), false);
+    return node;
+  }
+
+  deleteItemCreator() {
+    const { text, iconSrc, handler } = MENU_ITEMS_DEFAULT["deleteTable"]
+    const node = document.createElement("div");
+    node.classList.add("qlbt-delete-menu-item");
+
+    const iconSpan = document.createElement("span");
+    iconSpan.classList.add("qlbt-delete-menu-icon");
+    iconSpan.innerHTML = iconSrc;
+
+    const textSpan = document.createElement("span");
+    textSpan.classList.add("qlbt-delete-menu-text");
     textSpan.innerText = text;
 
     node.appendChild(iconSpan);
