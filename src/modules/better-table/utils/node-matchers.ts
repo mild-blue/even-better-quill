@@ -165,15 +165,15 @@ export function matchTableHeader(node, delta, scroll) {
 
 // supplement colgroup and col
 export function matchTable(node, delta, quill: Quill, options) {
-  const isBrokenTable = delta.ops.find((op) => "row" in op.attributes && "table-col" in op.attributes);
+  const isBrokenTable = delta.ops.find((op) => op.attributes && "row" in op.attributes && "table-col" in op.attributes);
   if (isBrokenTable) {
+    const tableInTableErrorHtml = options?.table?.tableInTableError
+      ? `<strong style="color: red;">${options.table.tableInTableError}<strong/>`
+      : "";
     // delete broken tables from main table
     const innerTables = Array.from(node.getElementsByTagName("table"));
-    const innerTablesHtml = innerTables
-      .map((table) => `<br /> ${options?.table?.tableInTableError ?? ""}` + table.outerHTML)
-      .join("");
+    const innerTablesHtml = innerTables.map((table) => `<br />` + tableInTableErrorHtml + table.outerHTML).join("");
     innerTables.forEach((table) => table.parentNode.removeChild(table));
-
     // append inner tables after main table
     return quill.clipboard.convert({ html: node.outerHTML + innerTablesHtml });
   }
