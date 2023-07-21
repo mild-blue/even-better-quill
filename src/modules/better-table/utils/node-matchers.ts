@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Quill from "quill";
 import { _omit, convertToHex } from "./index";
 import { TableCellLine } from "../formats/table";
@@ -162,7 +164,20 @@ export function matchTableHeader(node, delta, scroll) {
 }
 
 // supplement colgroup and col
-export function matchTable(node, delta, scroll) {
+export function matchTable(node, delta, quill: Quill, options) {
+  const isBrokenTable = delta.ops.find((op) => "row" in op.attributes && "table-col" in op.attributes);
+  if (isBrokenTable) {
+    // delete broken tables from main table
+    const innerTables = Array.from(node.getElementsByTagName("table"));
+    const innerTablesHtml = innerTables
+      .map((table) => `<br /> ${options?.table?.tableInTableError ?? ""}` + table.outerHTML)
+      .join("");
+    innerTables.forEach((table) => table.parentNode.removeChild(table));
+
+    // append inner tables after main table
+    return quill.clipboard.convert({ html: node.outerHTML + innerTablesHtml });
+  }
+
   let newColDelta = new Delta();
   const topRow = node.querySelector("tr");
 

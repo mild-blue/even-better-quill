@@ -12,6 +12,9 @@ window.onload = () => {
       imageResize: true,
       table: false,
       "better-table": {
+        table: {
+          tableInTableError: "This inner table was placed outside the parent table",
+        },
         operationMenu: {
           items: {
             unmergeCells: {
