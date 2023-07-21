@@ -165,7 +165,7 @@ export function matchTableHeader(node, delta, scroll) {
 
 // supplement colgroup and col
 export function matchTable(node, delta, quill: Quill, options) {
-  const isBrokenTable = delta.ops.find((op) => "row" in op.attributes && "table-col" in op.attributes);
+  const isBrokenTable = delta.ops.find((op) => op.attributes && "row" in op.attributes && "table-col" in op.attributes);
   if (isBrokenTable) {
     // delete broken tables from main table
     const innerTables = Array.from(node.getElementsByTagName("table"));
