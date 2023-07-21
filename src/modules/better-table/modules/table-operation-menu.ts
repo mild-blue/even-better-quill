@@ -380,13 +380,13 @@ export default class TableOperationMenu {
     const iconSpan = document.createElement("span");
     iconSpan.classList.add("qlbt-operation-menu-icon");
     iconSpan.innerHTML = iconSrc;
+    node.appendChild(iconSpan);
 
     const textSpan = document.createElement("span");
     textSpan.classList.add("qlbt-operation-menu-text");
     textSpan.innerText = text;
+    node.appendChild(textSpan);
 
-    node.appendChild(iconSpan);
-    // node.appendChild(textSpan);
     node.addEventListener("click", handler.bind(this), false);
     return node;
   }

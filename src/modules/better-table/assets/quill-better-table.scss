@@ -87,6 +87,28 @@ table.quill-better-table {
         height: 30px;
         width: 30px;
       }
+
+      .qlbt-operation-menu-text {
+        visibility: hidden;
+        width: 120px;
+        background-color: #000;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 105;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+    }
+
+    .qlbt-operation-menu-item:hover .qlbt-operation-menu-text {
+      visibility: visible;
+      opacity: 1;
     }
 
     .qlbt-operation-menu-item:nth-child(n + 5) {
