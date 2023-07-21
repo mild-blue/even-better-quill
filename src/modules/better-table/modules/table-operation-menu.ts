@@ -382,9 +382,11 @@ export default class TableOperationMenu {
     iconSpan.innerHTML = iconSrc;
     node.appendChild(iconSpan);
 
-    const textSpan = document.createElement("span");
+    // todo create tooltip creator an use it her, split into 2 rows don't use css
+    const textSpan = document.createElement("div");
     textSpan.classList.add("qlbt-operation-menu-text");
     textSpan.innerText = text;
+    textSpan.appendChild(document.createElement("div"));
     node.appendChild(textSpan);
 
     node.addEventListener("click", handler.bind(this), false);
