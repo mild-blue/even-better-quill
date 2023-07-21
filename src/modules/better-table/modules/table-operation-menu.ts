@@ -16,6 +16,7 @@ const operationIcon9 = require("bundle-text:../assets/icons/icon_operation_9.svg
 const MENU_MIN_HEIHGT = 150;
 const MENU_WIDTH = 200;
 const ERROR_LIMIT = 5;
+const DEFAULT_ACTION_SUBTITLE = "Actions";
 const DEFAULT_CELL_COLORS = ["white", "red", "yellow", "blue"];
 const DEFAULT_COLOR_SUBTITLE = "Background Colors";
 const DEFAULT_BORDER_WIDTH = ["0px", "1px", "2px"];
@@ -228,6 +229,7 @@ export default class TableOperationMenu {
     this.cellBorderWidth = options.border && options.border.widths ? options.border.widths : DEFAULT_BORDER_WIDTH;
     this.cellBorderWidthSubTitle =
       options.border && options.border.text ? options.border.text : DEFAULT_BORDER_WIDTH_SUBTITLE;
+    this.actionSubTitle = options.actions && options.actions.text ? options.actions.text : DEFAULT_ACTION_SUBTITLE;
 
     this.menuInitial(params);
     this.mount();
@@ -254,9 +256,18 @@ export default class TableOperationMenu {
       "min-height": `${MENU_MIN_HEIHGT}px`,
       width: `${MENU_WIDTH}px`,
     });
-    // todo save string in variable
-    this.domNode.appendChild(subTitleCreator("Actions"))
-    this.domNode.appendChild(createItemsSection(this.menuItems, this.menuItemCreator))
+
+    // actions
+    this.domNode.appendChild(subTitleCreator(this.actionSubTitle));
+    const node = document.createElement("div");
+    node.classList.add("qlbt-operation-menu-items");
+
+    for (let name in this.menuItems) {
+      if (this.menuItems[name] && name !== "deleteTable") {
+        node.appendChild(this.menuItemCreator(Object.assign({}, MENU_ITEMS_DEFAULT[name], this.menuItems[name])));
+      }
+    }
+    this.domNode.appendChild(node);
 
     // if colors option is false, disabled bg color
     if (this.options.color && this.options.color !== false) {
@@ -272,23 +283,9 @@ export default class TableOperationMenu {
       this.domNode.appendChild(this.setBorderWidth(this.cellBorderWidth));
     }
 
+    //  delete action
     this.domNode.appendChild(dividingCreator());
-    this.domNode.appendChild(this.deleteItemCreator())
-
-    // todo handler is not working
-    function createItemsSection(menuItems, menuItemCreator){
-      const node = document.createElement("div");
-      node.classList.add("qlbt-operation-menu-items");
-
-      for (let name in menuItems) {
-        if (menuItems[name] && name !== "deleteTable") {
-          node.appendChild(
-              menuItemCreator(Object.assign({}, MENU_ITEMS_DEFAULT[name], menuItems[name]))
-          );
-        }
-      }
-      return node
-    }
+    this.domNode.appendChild(this.deleteItemCreator());
 
     // create dividing line
     function dividingCreator() {
@@ -395,7 +392,7 @@ export default class TableOperationMenu {
   }
 
   deleteItemCreator() {
-    const { text, iconSrc, handler } = MENU_ITEMS_DEFAULT["deleteTable"]
+    const { text, iconSrc, handler } = MENU_ITEMS_DEFAULT["deleteTable"];
     const node = document.createElement("div");
     node.classList.add("qlbt-delete-menu-item");
 

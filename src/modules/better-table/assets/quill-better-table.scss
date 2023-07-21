@@ -65,8 +65,8 @@ table.quill-better-table {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding-left:  16px;
-    padding-right:  16px;
+    padding-left: 16px;
+    padding-right: 16px;
     padding-bottom: 10px;
 
     .qlbt-operation-menu-item {
@@ -79,7 +79,6 @@ table.quill-better-table {
       cursor: pointer;
       color: #595959;
 
-
       &:hover {
         background-color: #efefef;
       }
@@ -90,7 +89,7 @@ table.quill-better-table {
       }
     }
 
-    .qlbt-operation-menu-item:nth-child(n+5) {
+    .qlbt-operation-menu-item:nth-child(n + 5) {
       margin-top: 6px;
     }
   }
@@ -102,7 +101,6 @@ table.quill-better-table {
     background-color: #fff;
     cursor: pointer;
     color: #595959;
-
 
     &:hover {
       background-color: #efefef;
@@ -166,7 +164,6 @@ table.quill-better-table {
       cursor: pointer;
     }
   }
-
 }
 
 .qlbt-col-tool {
