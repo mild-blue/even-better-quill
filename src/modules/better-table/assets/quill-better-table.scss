@@ -101,7 +101,8 @@ table.quill-better-table {
         opacity: 0;
         transition: opacity 0.3s;
 
-        div {
+        // tooltip triangle
+        .qlbt-operation-menu-triangle {
           transform: translate(-50%, -50%) rotate(45deg);
           position: absolute;
           width: 0;
@@ -115,21 +116,23 @@ table.quill-better-table {
       opacity: 1;
     }
 
+    // first row
     .qlbt-operation-menu-item:nth-child(-n + 4) {
       .qlbt-operation-menu-text {
         transform: translateY(-50%);
         margin-bottom: 50px;
 
-        div {
+        // tooltip triangle
+        .qlbt-operation-menu-triangle {
           top: 100%;
           left: 50%;
-
-          border-top: 10px solid transparent; /* Height of the triangle */
+          border-top: 10px solid transparent;
           border-right: 10px solid #424242;
         }
       }
     }
 
+    // second row
     .qlbt-operation-menu-item:nth-child(n + 5) {
       margin-top: 6px;
 
@@ -137,12 +140,11 @@ table.quill-better-table {
         transform: translateY(50%);
         margin-top: 50px;
 
-        div {
+        .qlbt-operation-menu-triangle {
           position: absolute;
           top: 0%;
           left: 50%;
-
-          border-bottom: 10px solid transparent; /* Height of the triangle */
+          border-bottom: 10px solid transparent;
           border-left: 10px solid #424242;
         }
       }
