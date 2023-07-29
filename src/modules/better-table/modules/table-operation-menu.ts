@@ -16,11 +16,13 @@ const operationIcon9 = require("bundle-text:../assets/icons/icon_operation_9.svg
 const MENU_MIN_HEIHGT = 150;
 const MENU_WIDTH = 200;
 const ERROR_LIMIT = 5;
-const DEFAULT_ACTION_SUBTITLE = "Actions";
+const DEFAULT_MENU_ITEMS_SUBTITLE = "Actions";
 const DEFAULT_CELL_COLORS = ["white", "red", "yellow", "blue"];
 const DEFAULT_COLOR_SUBTITLE = "Background Colors";
 const DEFAULT_BORDER_WIDTH = ["0px", "1px", "2px"];
 const DEFAULT_BORDER_WIDTH_SUBTITLE = "Table border width";
+const DELETE_TABLE_KEY = "deleteTable";
+const TEXT_KEY = "text";
 
 const MENU_ITEMS_DEFAULT = {
   insertColumnRight: {
@@ -218,6 +220,7 @@ export default class TableOperationMenu {
     this.table = params.table;
     this.quill = quill;
     this.options = options;
+    this.menutItemsSubTitle = options.items && options.items.text ? options.items.text : DEFAULT_MENU_ITEMS_SUBTITLE;
     this.menuItems = Object.assign({}, MENU_ITEMS_DEFAULT, options.items);
     this.tableColumnTool = betterTableModule.columnTool;
     this.boundary = this.tableSelection.boundary;
@@ -229,7 +232,6 @@ export default class TableOperationMenu {
     this.cellBorderWidth = options.border && options.border.widths ? options.border.widths : DEFAULT_BORDER_WIDTH;
     this.cellBorderWidthSubTitle =
       options.border && options.border.text ? options.border.text : DEFAULT_BORDER_WIDTH_SUBTITLE;
-    this.actionSubTitle = options.actions && options.actions.text ? options.actions.text : DEFAULT_ACTION_SUBTITLE;
 
     this.menuInitial(params);
     this.mount();
@@ -257,13 +259,13 @@ export default class TableOperationMenu {
       width: `${MENU_WIDTH}px`,
     });
 
-    // actions
-    this.domNode.appendChild(subTitleCreator(this.actionSubTitle));
+    // menu items
+    this.domNode.appendChild(subTitleCreator(this.menutItemsSubTitle));
     const node = document.createElement("div");
     node.classList.add("qlbt-operation-menu-items");
 
     for (let name in this.menuItems) {
-      if (this.menuItems[name] && name !== "deleteTable") {
+      if (this.menuItems[name] && name !== DELETE_TABLE_KEY && name !== TEXT_KEY) {
         node.appendChild(this.menuItemCreator(Object.assign({}, MENU_ITEMS_DEFAULT[name], this.menuItems[name])));
       }
     }
@@ -399,7 +401,7 @@ export default class TableOperationMenu {
   }
 
   deleteItemCreator() {
-    const { text, iconSrc, handler } = MENU_ITEMS_DEFAULT["deleteTable"];
+    const { text, iconSrc, handler } = MENU_ITEMS_DEFAULT[DELETE_TABLE_KEY];
     const node = document.createElement("div");
     node.classList.add("qlbt-delete-menu-item");
 

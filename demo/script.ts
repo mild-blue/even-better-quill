@@ -17,6 +17,7 @@ window.onload = () => {
         },
         operationMenu: {
           items: {
+            text: "Actions title",
             unmergeCells: {
               text: "Another unmerge cells name",
             },
