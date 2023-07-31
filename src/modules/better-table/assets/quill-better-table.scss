@@ -59,7 +59,117 @@ table.quill-better-table {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   font-size: 14px;
   z-index: 100;
-  overflow: hidden;
+  padding-top: 5px;
+
+  .qlbt-operation-menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 10px;
+
+    .qlbt-operation-menu-item {
+      width: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+      background-color: #fff;
+      cursor: pointer;
+      color: #595959;
+
+      &:hover {
+        background-color: #efefef;
+      }
+
+      .qlbt-operation-menu-icon {
+        height: 30px;
+        width: 30px;
+      }
+
+      .qlbt-operation-menu-text {
+        visibility: hidden;
+        width: 120px;
+        background-color: #424242;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 105;
+        opacity: 0;
+        transition: opacity 0.3s;
+
+        // tooltip triangle
+        .qlbt-operation-menu-triangle {
+          transform: translate(-50%, -50%) rotate(45deg);
+          position: absolute;
+          width: 0;
+          height: 0;
+        }
+      }
+    }
+
+    .qlbt-operation-menu-item:hover .qlbt-operation-menu-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    // first row
+    .qlbt-operation-menu-item:nth-child(-n + 4) {
+      .qlbt-operation-menu-text {
+        transform: translateY(-50%);
+        margin-bottom: 50px;
+
+        // tooltip triangle
+        .qlbt-operation-menu-triangle {
+          top: 100%;
+          left: 50%;
+          border-top: 10px solid transparent;
+          border-right: 10px solid #424242;
+        }
+      }
+    }
+
+    // second row
+    .qlbt-operation-menu-item:nth-child(n + 5) {
+      margin-top: 6px;
+
+      .qlbt-operation-menu-text {
+        transform: translateY(50%);
+        margin-top: 50px;
+
+        .qlbt-operation-menu-triangle {
+          position: absolute;
+          top: 0%;
+          left: 50%;
+          border-bottom: 10px solid transparent;
+          border-left: 10px solid #424242;
+        }
+      }
+    }
+  }
+
+  .qlbt-delete-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #595959;
+
+    &:hover {
+      background-color: #efefef;
+    }
+
+    .qlbt-delete-menu-icon {
+      margin-right: 8px;
+      height: 20px;
+      width: 20px;
+      font-size: 0;
+    }
+  }
 
   .qlbt-operation-menu-dividing {
     height: 1px;
@@ -109,28 +219,6 @@ table.quill-better-table {
       border: 1px solid #595959;
       border-radius: 6px;
       cursor: pointer;
-    }
-  }
-
-  .qlbt-operation-menu-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 16px;
-    background-color: #fff;
-    cursor: pointer;
-    color: #595959;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    &:hover {
-      background-color: #efefef;
-    }
-
-    .qlbt-operation-menu-icon {
-      margin-right: 8px;
-      height: 20px;
-      width: 20px;
-      font-size: 0;
     }
   }
 }

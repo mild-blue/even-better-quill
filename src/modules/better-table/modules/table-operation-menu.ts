@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Quill from "quill";
 import { css, getRelativeRect } from "../utils";
 
@@ -15,10 +16,13 @@ const operationIcon9 = require("bundle-text:../assets/icons/icon_operation_9.svg
 const MENU_MIN_HEIHGT = 150;
 const MENU_WIDTH = 200;
 const ERROR_LIMIT = 5;
+const DEFAULT_MENU_ITEMS_SUBTITLE = "Actions";
 const DEFAULT_CELL_COLORS = ["white", "red", "yellow", "blue"];
 const DEFAULT_COLOR_SUBTITLE = "Background Colors";
 const DEFAULT_BORDER_WIDTH = ["0px", "1px", "2px"];
 const DEFAULT_BORDER_WIDTH_SUBTITLE = "Table border width";
+const DELETE_TABLE_KEY = "deleteTable";
+const TEXT_KEY = "text";
 
 const MENU_ITEMS_DEFAULT = {
   insertColumnRight: {
@@ -216,6 +220,7 @@ export default class TableOperationMenu {
     this.table = params.table;
     this.quill = quill;
     this.options = options;
+    this.menutItemsSubTitle = options.items && options.items.text ? options.items.text : DEFAULT_MENU_ITEMS_SUBTITLE;
     this.menuItems = Object.assign({}, MENU_ITEMS_DEFAULT, options.items);
     this.tableColumnTool = betterTableModule.columnTool;
     this.boundary = this.tableSelection.boundary;
@@ -254,17 +259,17 @@ export default class TableOperationMenu {
       width: `${MENU_WIDTH}px`,
     });
 
-    for (let name in this.menuItems) {
-      if (this.menuItems[name]) {
-        this.domNode.appendChild(
-          this.menuItemCreator(Object.assign({}, MENU_ITEMS_DEFAULT[name], this.menuItems[name]))
-        );
+    // menu items
+    this.domNode.appendChild(subTitleCreator(this.menutItemsSubTitle));
+    const node = document.createElement("div");
+    node.classList.add("qlbt-operation-menu-items");
 
-        if (["insertRowDown", "unmergeCells"].indexOf(name) > -1) {
-          this.domNode.appendChild(dividingCreator());
-        }
+    for (let name in this.menuItems) {
+      if (this.menuItems[name] && name !== DELETE_TABLE_KEY && name !== TEXT_KEY) {
+        node.appendChild(this.menuItemCreator(Object.assign({}, MENU_ITEMS_DEFAULT[name], this.menuItems[name])));
       }
     }
+    this.domNode.appendChild(node);
 
     // if colors option is false, disabled bg color
     if (this.options.color && this.options.color !== false) {
@@ -279,6 +284,10 @@ export default class TableOperationMenu {
       this.domNode.appendChild(subTitleCreator(this.cellBorderWidthSubTitle));
       this.domNode.appendChild(this.setBorderWidth(this.cellBorderWidth));
     }
+
+    //  delete action
+    this.domNode.appendChild(dividingCreator());
+    this.domNode.appendChild(this.deleteItemCreator());
 
     // create dividing line
     function dividingCreator() {
@@ -373,9 +382,35 @@ export default class TableOperationMenu {
     const iconSpan = document.createElement("span");
     iconSpan.classList.add("qlbt-operation-menu-icon");
     iconSpan.innerHTML = iconSrc;
+    node.appendChild(iconSpan);
+
+    node.appendChild(this.tooltipCreator(text));
+
+    node.addEventListener("click", handler.bind(this), false);
+    return node;
+  }
+
+  tooltipCreator(text) {
+    const textSpan = document.createElement("div");
+    textSpan.classList.add("qlbt-operation-menu-text");
+    textSpan.innerText = text;
+    const triangle = document.createElement("div");
+    triangle.classList.add("qlbt-operation-menu-triangle");
+    textSpan.appendChild(triangle);
+    return textSpan;
+  }
+
+  deleteItemCreator() {
+    const { text, iconSrc, handler } = MENU_ITEMS_DEFAULT[DELETE_TABLE_KEY];
+    const node = document.createElement("div");
+    node.classList.add("qlbt-delete-menu-item");
+
+    const iconSpan = document.createElement("span");
+    iconSpan.classList.add("qlbt-delete-menu-icon");
+    iconSpan.innerHTML = iconSrc;
 
     const textSpan = document.createElement("span");
-    textSpan.classList.add("qlbt-operation-menu-text");
+    textSpan.classList.add("qlbt-delete-menu-text");
     textSpan.innerText = text;
 
     node.appendChild(iconSpan);
