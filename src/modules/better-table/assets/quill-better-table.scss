@@ -191,3 +191,7 @@ table.quill-better-table {
 [contenteditable] {
   outline: 0 solid transparent;
 }
+
+.quill-better-table-wrapper {
+  overflow: auto;
+}
