@@ -46,6 +46,10 @@ export default class BetterTable extends Module {
   constructor(quill, options) {
     super(quill, options);
 
+    const toolbar = this.quill.getModule("toolbar");
+    // use custom remove text formatting that doesn't break the table
+    toolbar.addHandler("clean", () => this.removeTextFormatting());
+
     // handle click on quill-better-table
     this.quill.root.addEventListener(
       "click",
@@ -159,6 +163,21 @@ export default class BetterTable extends Module {
     quill.clipboard.matchers = quill.clipboard.matchers.filter((matcher) => {
       return matcher[0] !== "tr";
     });
+  }
+
+  // doesn't affect line formatting - lists, bullets, which breaks tables in original function
+  removeTextFormatting(range = this.quill.getSelection()) {
+    if (range) {
+      this.quill.formatText(range, {
+        bold: false,
+        italic: false,
+        underline: false,
+        strike: false,
+        color: false,
+        background: false,
+        script: false,
+      });
+    }
   }
 
   getTable(range = this.quill.getSelection()) {

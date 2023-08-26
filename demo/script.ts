@@ -8,7 +8,13 @@ window.onload = () => {
   const quill = new Quill("#editor-wrapper", {
     theme: "snow",
     modules: {
-      toolbar: [[{ header: [1, 2, false] }], ["bold", "italic", "underline"], ["image", "code-block"]],
+      toolbar: [
+        [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline"],
+        ["image", "code-block"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["clean"],
+      ],
       imageResize: true,
       table: false,
       "better-table": {
