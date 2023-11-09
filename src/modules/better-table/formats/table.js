@@ -852,6 +852,8 @@ class TableViewWrapper extends Container {
       "scroll",
       (e) => {
         const tableModule = quill.getModule("better-table");
+        if (!tableModule) return console.log("better-table module not registered. Known bug. Unknown cause.");
+
         if (tableModule.columnTool) {
           tableModule.columnTool.domNode.scrollLeft = e.target.scrollLeft;
         }
