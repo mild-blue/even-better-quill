@@ -401,7 +401,7 @@ export default class TableOperationMenu {
   }
 
   deleteItemCreator() {
-    const { text, iconSrc, handler } = {...MENU_ITEMS_DEFAULT[DELETE_TABLE_KEY], ...this.menuItems[DELETE_TABLE_KEY]};
+    const { text, iconSrc, handler } = { ...MENU_ITEMS_DEFAULT[DELETE_TABLE_KEY], ...this.menuItems[DELETE_TABLE_KEY] };
     const node = document.createElement("div");
     node.classList.add("qlbt-delete-menu-item");
 

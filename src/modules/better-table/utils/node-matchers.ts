@@ -243,3 +243,38 @@ export function matchElement(quill, node, delta) {
 
   return delta;
 }
+
+export function matchHeader(quill, delta) {
+  const range = quill.getSelection();
+  const currentBlot = quill.getLeaf(range?.index)[0];
+
+  const parseHeadingSize = (size: number) => {
+    switch (size) {
+      case 1:
+        return "26px";
+      case 2:
+        return "20px";
+      case 3:
+        return "16px";
+      default:
+        return "11px";
+    }
+  };
+
+  // Replace headings with p since headings in tables are not supported
+  if (currentBlot && isInTableCell(currentBlot)) {
+    const newDelta = new Delta();
+
+    delta.ops.map((op) => {
+      if ("header" in op.attributes) {
+        newDelta.insert(op.insert, { bold: true, size: parseHeadingSize(op.attributes.header) });
+      } else {
+        newDelta.insert(op.insert, op.attributes);
+      }
+    });
+
+    return newDelta;
+  }
+
+  return delta;
+}

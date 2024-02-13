@@ -6,7 +6,7 @@ import TableSelection from "./modules/table-selection";
 import TableOperationMenu from "./modules/table-operation-menu";
 
 // import table node matchers
-import { matchTableCell, matchTableHeader, matchTable, matchElement } from "./utils/node-matchers";
+import { matchTableCell, matchTableHeader, matchTable, matchElement, matchHeader } from "./utils/node-matchers";
 
 import { getEventComposedPath } from "./utils/index";
 
@@ -153,7 +153,7 @@ export default class BetterTable extends Module {
     quill.clipboard.addMatcher("th", matchTableHeader);
     quill.clipboard.addMatcher("table", (node, delta) => matchTable(node, delta, quill, options));
     quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => matchElement(quill, node, delta));
-    // quill.clipboard.addMatcher('h1, h2, h3, h4, h5, h6', matchHeader)
+    quill.clipboard.addMatcher("h1, h2, h3, h4, h5, h6", (_, delta) => matchHeader(quill, delta));
 
     // remove matcher for tr tag
     quill.clipboard.matchers = quill.clipboard.matchers.filter((matcher) => {
